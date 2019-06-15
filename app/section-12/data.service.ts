@@ -17,6 +17,7 @@ import 'rxjs/add/observable/throw'; // <-- add rxjs Observable extensions used h
 @Injectable()
 export class DataService {
   private customersUrl = 'api/customers';
+  private statesUrl = 'api/states'
 
   constructor(
     private http: Http,  // <-- inject http
@@ -47,5 +48,14 @@ export class DataService {
     return this.http.get(this.customersUrl)
       .map(response => response.json().data as Customer[])  // <-- extract data
       .do(custs => this.logger.log(`Got ${custs.length} customers`));
+  }
+
+   /** Get existing states as an Observable */
+   getStates(): Observable<string[]> {
+    this.logger.log('Getting States as an Observable via Http ...');
+
+    return this.http.get(this.statesUrl)
+      .map(response => response.json().data as string[])  // <-- extract data
+      .do(states => this.logger.log(`Got ${states.length} states!!!!`));
   }
 }

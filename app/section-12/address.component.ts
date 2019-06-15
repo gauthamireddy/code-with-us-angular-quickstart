@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
-
+import { Component, Input, OnInit } from '@angular/core';
+import { DataService }   from './data.service';
 import { Address } from './model';
 
 @Component({
@@ -7,9 +7,24 @@ import { Address } from './model';
   selector: 'my-address',
   templateUrl: 'address.component.html'
 })
-export class AddressComponent  {
+export class AddressComponent implements OnInit() {
   @Input() address: Address;
+  states: string[];
+
+  constructor( private dataService: DataService) {}
 
   regions   = ['East', 'Midwest', 'North', 'South', 'West'];
-  states    = ['California', 'Illinois', 'Jalisco', 'Quebec'];
+
+  ngOnInit() {
+    this.getStates();
+  }
+
+  getStates() {
+    this.dataService.getStates().subscribe((states) => {
+      this.states = states;
+    })
+  }
+
 }
+
+

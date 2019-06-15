@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Customer } from './model';
 
 import { DataService } from './data.service';
+import { LoggerService } from './logger.service';
 
 @Component({
   moduleId: module.id,
@@ -17,10 +18,11 @@ export class CustomerListComponent implements OnInit {
   customers: Customer[];
 
   // inject the DataService
-  constructor(private dataService: DataService) { }
+  constructor(private dataService: DataService, private LoggerService: LoggerService) { }
 
   ngOnInit() {
     this.customers = this.dataService.getCustomers();
+    this.LoggerService.log("Getting Customers...")
   }
 
   shift(increment: number) {
